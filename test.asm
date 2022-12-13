@@ -1,5 +1,6 @@
 .data
-	msg_1: .asciiz "JOGO DA FORCA\n" #mensagem exibida
+	
+	msg_1: .asciiz "JOGO DA FORCA\n\n" #mensagem exibida
 	msg_2: .asciiz "Digite uma letra: " #mensagem exibida
 	msg_3: .asciiz "\n" #mensagem exibida
 	msg_4: .asciiz "Final de jogo\n" #mensagem exibida
@@ -13,50 +14,63 @@
 	
 	palavra_teste: .asciiz "______"
 	
-	divisor: .asciiz "Resposta: "
-	space: .word ' '
+	divisor: .asciiz "Resultado parcial: "
 	newLine: .asciiz "\n"
 	
 .text
 
+	#inicia o jogo
 	li $v0, 4
 	la $a0, msg_1
 	syscall #so imprime a0 
-	
-	move $t0, $zero
+
 	
 	loop:
-		beq $t0, 5, saida
-		addi $t0, $t0, 1
+	
+		bgt $s0, 5, saida
+		
+		#imprime o resultado da busca
+		la $a0, palavra_teste
+		jal imprime_separado	
 			
+		#imprime a solicitação de digitação da letra	
 		li $v0, 4
 		la $a0, msg_2
 		syscall #so imprime a0 
 		
+		#lê a letra
 		li $v0, 12
 		syscall
 		move $a2, $v0
 		
+		#pula linha
 		li $v0, 4
 		la $a0, msg_3
 		syscall #so imprime a0 
 		
+		#procura a letra digitada na palavra sortida
 		la $a0, palavra_3
 		la $a1, palavra_teste
 		
 		jal procura_letra
+		beq $v0, 0, ERROU
 		add $s1, $s1, $v0
-		
-		la $a0, palavra_teste
-		jal imprime_separado
-		
-		j loop
+		j ACERTOU
+	
+		ERROU:
+			add $s0, $s0, 1
+			
+		ACERTOU:
+			j loop
 	
 	saida:
 	
 		li $v0, 4
-		la $a0, msg_3
+		la $a0, msg_4
 		syscall #so imprime a0 
+		
+		li $v0, 10
+		syscall
 
 		
 .globl procura_letra
@@ -96,9 +110,6 @@ procura_letra:
 		move $a0, $t1
 		li $v0, 11
 		syscall # inprime caractere
-		lw $a0, space
-		li $v0, 11
-		syscall # imprime espaco
 		add $t0, $t0, 1 # incrementa ponteiro
 		j LOOP_ISEP
 	END_LOOP_ISEP:
