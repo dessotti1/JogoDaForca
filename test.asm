@@ -4,8 +4,6 @@
 	msg_3: .asciiz "\n" #mensagem exibida
 	msg_4: .asciiz "Final de jogo\n" #mensagem exibida
 	
-	letra: .space 1
-	
 	palavra_1: .asciiz "casa"
 	palavra_2: .asciiz "bola"
 	palavra_3: .asciiz "arvore"
@@ -13,7 +11,11 @@
 	palavra_5: .asciiz "sapato"
 	
 	
-	palavra_teste: .asciiz "____"
+	palavra_teste: .asciiz "______"
+	
+	divisor: .asciiz "Resposta: "
+	space: .word ' '
+	newLine: .asciiz "\n"
 	
 .text
 
@@ -31,24 +33,22 @@
 		la $a0, msg_2
 		syscall #so imprime a0 
 		
-		li $v0, 8
-		la $a0, letra
-		la $a1, 1
+		li $v0, 12
 		syscall
+		move $a2, $v0
 		
 		li $v0, 4
 		la $a0, msg_3
 		syscall #so imprime a0 
 		
-		la $a0, palavra_1
+		la $a0, palavra_3
 		la $a1, palavra_teste
-		la $a2, letra
-		jal procura_letra
 		
+		jal procura_letra
 		add $s1, $s1, $v0
-		li $v0, 2
-		la $a0, ($s1)
-		syscall #so imprime a0 
+		
+		la $a0, palavra_teste
+		jal imprime_separado
 		
 		j loop
 	
@@ -62,9 +62,9 @@
 .globl procura_letra
 procura_letra:
 
-	move $t0, $a0 # ponteiro para a string 1
-	move $t1, $a1 # ponteiro para a string 2
-	move $t2, $a2 # caractere
+	move $t0, $a0 # ponteiro para a string da palavra sortida
+	move $t1, $a1 # ponteiro para a string da palavra a ser revelada
+	move $t2, $a2 # caractere que o usuário digitou
 	li $t3, 0 # contador de caracteres revelados
 	
 	LOOP_RP:	
@@ -83,4 +83,26 @@ procura_letra:
 	END_LOOP_RP:
 	move $v0, $t3
 	jr $ra
-		
+
+.globl imprime_separado
+ imprime_separado:
+ 	move $t0, $a0 # t0 - ponteiro
+ 	la $a0, divisor
+	li $v0, 4
+	syscall # imprime divisor
+	LOOP_ISEP:
+		lb $t1, 0($t0)
+		beq $t1, $zero, END_LOOP_ISEP
+		move $a0, $t1
+		li $v0, 11
+		syscall # inprime caractere
+		lw $a0, space
+		li $v0, 11
+		syscall # imprime espaco
+		add $t0, $t0, 1 # incrementa ponteiro
+		j LOOP_ISEP
+	END_LOOP_ISEP:
+	la $a0, newLine
+	li $v0, 4
+	syscall # imprime \n
+	jr $ra
