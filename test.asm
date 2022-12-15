@@ -17,7 +17,7 @@
 	palavra_9: .asciiz "paralelepipedo"
 	palavra_10: .asciiz "televisao"
 	palavra_11: .asciiz "elefante"
-	palavra_12: .asciiz "chapeu"
+	palavra_12: .asciiz "quadra de tenis"
 	palavra_13: .asciiz "historia"
 	palavra_14: .asciiz "capital"
 	palavra_15: .asciiz "sofa-cama"
@@ -28,9 +28,10 @@
 	palavra_20: .asciiz "basquete"
 	
 	divisor: .asciiz "Resultado parcial: "
+	divisor_1: .asciiz "\nResultado final: "
 	newLine: .asciiz "\n"
 	palavra_teste: .space 50
-	palvra: .space 50
+	palavra: .space 50
 	
 .text
 
@@ -39,12 +40,31 @@
 	la $a0, msg_1
 	syscall #so imprime a0
 	
-	la $a0, palavra_3
+	la $a0, palavra_12
+	la $a1, palavra
+	jal strcpy
+	
+	la $a0, palavra
 	jal strlen 		
 	move $s2, $v0	
 	
 	la $a1, palavra_teste			
-	jal preenche_ul					
+	jal preenche_ul	
+	
+	
+	la $a0, palavra
+	la $a1, palavra_teste
+	li $a2, '-'
+			
+	jal procura_letra
+	add $s1, $s1, $v0	
+	
+	la $a0, palavra
+	la $a1, palavra_teste
+	li $a2, ' '
+			
+	jal procura_letra
+	add $s1, $s1, $v0					
 	
 	loop:
 	
@@ -70,7 +90,7 @@
 		syscall #so imprime a0 
 		
 		#procura a letra digitada na palavra sortida
-		la $a0, palavra_3
+		la $a0, palavra
 		la $a1, palavra_teste
 		
 		jal procura_letra
@@ -88,6 +108,9 @@
 			
 		FINAL_DE_JOGO_COM_ACERTO:
 		
+			la $a0, palavra_teste
+			jal imprime_final
+			
 			li $v0, 4
 			la $a0, msg_5
 			syscall #so imprime a0 
@@ -97,6 +120,10 @@
 		
 	
 		FINAL_DE_JOGO_COM_ERRO:
+		
+			
+			la $a0, palavra_teste
+			jal imprime_final
 		
 			li $v0, 4
 			la $a0, msg_4
@@ -151,6 +178,27 @@ procura_letra:
 	li $v0, 4
 	syscall # imprime \n
 	jr $ra
+	
+.globl imprime_final
+ imprime_final:
+ 	move $t0, $a0 # t0 - ponteiro
+ 	la $a0, divisor_1
+	li $v0, 4
+	syscall # imprime divisor
+	LOOP_ISEP_1:
+		lb $t1, 0($t0)
+		beq $t1, $zero, END_LOOP_ISEP_1
+		move $a0, $t1
+		li $v0, 11
+		syscall # inprime caractere
+		add $t0, $t0, 1 # incrementa ponteiro
+		j LOOP_ISEP_1
+	END_LOOP_ISEP_1:
+	la $a0, newLine
+	li $v0, 4
+	syscall # imprime \n
+	jr $ra
+
 
 .globl strlen
 strlen:
@@ -180,7 +228,18 @@ strlen:
 	END_LOOP_PUL:
 	sb $zero, 0($a1)
 	jr $ra
-
-
-
 	
+.globl strcpy
+strcpy:
+	move $t0, $a0 # t0 <- ponteiro para a primeira string
+	move $t1, $a1 # t1 <- ponteiro para cópia
+	LOOP_SC:
+		lb $t2, 0($t0)
+		lb $t3, 0($t1)
+		sb $t2, 0($t1) # *(t1) = *(t0)
+		beq $t2, $zero, END_LOOP_SC
+		addi $t0, $t0, 1 # t0++
+		addi $t1, $t1, 1 # t1++
+		j LOOP_SC
+	END_LOOP_SC:
+	jr $ra
