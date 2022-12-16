@@ -6,6 +6,7 @@
 	msg_4: .asciiz "\nQue pena! Tente de novo!\n\nFinal de jogo.\n" #mensagem exibida
 	msg_5: .asciiz "\nParabéns, você acertou!\n\nFinal de jogo.\n" #mensagem exibida
 	
+	palavra_0: .asciiz "basquete"
 	palavra_1: .asciiz "casa"
 	palavra_2: .asciiz "arvore"
 	palavra_3: .asciiz "bola"
@@ -25,13 +26,14 @@
 	palavra_17: .asciiz "cadeira"
 	palavra_18: .asciiz "vistoria"
 	palavra_19: .asciiz "jogador"
-	palavra_20: .asciiz "basquete"
 	
 	divisor: .asciiz "Resultado parcial: "
 	divisor_1: .asciiz "\nResultado final: "
+	divisor_2: .asciiz "\nA palavra era: "
 	newLine: .asciiz "\n"
 	palavra_teste: .space 50
 	palavra: .space 50
+	palavra_aux: .space 50
 	
 .text
 
@@ -40,9 +42,174 @@
 	la $a0, msg_1
 	syscall #so imprime a0
 	
+	#sorteia a numero de 0 a 19
+	li $a1, 20  
+    	li $v0, 42  
+    	syscall
+    	
+    	#atribui a palavra
+    	beq $a0, 0, PALAVRA_0
+	beq $a0, 1, PALAVRA_1
+	beq $a0, 2, PALAVRA_2
+	beq $a0, 3, PALAVRA_3
+	beq $a0, 4, PALAVRA_4
+	beq $a0, 5, PALAVRA_5
+	beq $a0, 6, PALAVRA_6
+	beq $a0, 7, PALAVRA_7
+	beq $a0, 8, PALAVRA_8
+	beq $a0, 9, PALAVRA_9
+	beq $a0, 10, PALAVRA_10
+	beq $a0, 11, PALAVRA_11
+	beq $a0, 12, PALAVRA_12
+	beq $a0, 13, PALAVRA_13
+	beq $a0, 14, PALAVRA_14
+	beq $a0, 15, PALAVRA_15
+	beq $a0, 16, PALAVRA_16
+	beq $a0, 17, PALAVRA_17
+	beq $a0, 18, PALAVRA_18
+	beq $a0, 19, PALAVRA_19
+	
+	PALAVRA_0:
+		
+	la $a0, palavra_0
+	la $a1, palavra_aux
+	jal strcpy
+	j FINAL
+	
+	PALAVRA_1:
+	
+	la $a0, palavra_1
+	la $a1, palavra
+	jal strcpy
+	j FINAL
+	
+	PALAVRA_2:
+	
+	la $a0, palavra_2
+	la $a1, palavra
+	jal strcpy
+	j FINAL
+	
+	PALAVRA_3:
+	
+	la $a0, palavra_3
+	la $a1, palavra
+	jal strcpy
+	j FINAL
+	
+	PALAVRA_4:
+	
+	la $a0, palavra_4
+	la $a1, palavra
+	jal strcpy
+	j FINAL
+	
+	PALAVRA_5:
+	
+	la $a0, palavra_5
+	la $a1, palavra
+	jal strcpy
+	j FINAL
+	
+	PALAVRA_6:
+	
+	la $a0, palavra_6
+	la $a1, palavra
+	jal strcpy
+	j FINAL
+	
+	PALAVRA_7:
+	
+	la $a0, palavra_7
+	la $a1, palavra
+	jal strcpy
+	j FINAL
+	
+	PALAVRA_8:
+	
+	la $a0, palavra_8
+	la $a1, palavra
+	jal strcpy
+	j FINAL
+	
+	PALAVRA_9:
+	
+	la $a0, palavra_9
+	la $a1, palavra
+	jal strcpy
+	j FINAL
+	
+	PALAVRA_10:
+	
+	la $a0, palavra_10
+	la $a1, palavra
+	jal strcpy
+	j FINAL
+	
+	PALAVRA_11:
+	
+	la $a0, palavra_11
+	la $a1, palavra
+	jal strcpy
+	j FINAL
+	
+	PALAVRA_12:
+	
 	la $a0, palavra_12
 	la $a1, palavra
 	jal strcpy
+	j FINAL
+	
+	PALAVRA_13:
+	
+	la $a0, palavra_13
+	la $a1, palavra
+	jal strcpy
+	j FINAL
+	
+	PALAVRA_14:
+	
+	la $a0, palavra_14
+	la $a1, palavra
+	jal strcpy
+	j FINAL
+	
+	PALAVRA_15:
+	
+	la $a0, palavra_15
+	la $a1, palavra
+	jal strcpy
+	j FINAL
+	
+	PALAVRA_16:
+	
+	la $a0, palavra_16
+	la $a1, palavra
+	jal strcpy
+	j FINAL
+	
+	PALAVRA_17:
+	
+	la $a0, palavra_17
+	la $a1, palavra
+	jal strcpy
+	j FINAL
+	
+	PALAVRA_18:
+	
+	la $a0, palavra_18
+	la $a1, palavra
+	jal strcpy
+	j FINAL
+	
+	PALAVRA_19:
+	
+	la $a0, palavra_19
+	la $a1, palavra
+	jal strcpy
+	j FINAL
+	
+	FINAL:
 	
 	la $a0, palavra
 	jal strlen 		
@@ -72,6 +239,7 @@
 		
 		#imprime o resultado da busca
 		la $a0, palavra_teste
+		la $a1, 1
 		jal imprime_separado	
 			
 		#imprime a solicitação de digitação da letra	
@@ -109,7 +277,8 @@
 		FINAL_DE_JOGO_COM_ACERTO:
 		
 			la $a0, palavra_teste
-			jal imprime_final
+			la $a1, 2
+			jal imprime_separado
 			
 			li $v0, 4
 			la $a0, msg_5
@@ -122,8 +291,9 @@
 		FINAL_DE_JOGO_COM_ERRO:
 		
 			
-			la $a0, palavra_teste
-			jal imprime_final
+			la $a0, palavra
+			la $a1, 3
+			jal imprime_separado
 		
 			li $v0, 4
 			la $a0, msg_4
@@ -159,10 +329,28 @@ procura_letra:
 	move $v0, $t3
 	jr $ra
 
+
 .globl imprime_separado
  imprime_separado:
  	move $t0, $a0 # t0 - ponteiro
- 	la $a0, divisor
+ 	move $t1, $a1
+ 	
+ 	beq $t1, 1, OP_1
+ 	beq $t1, 2, OP_2
+ 	beq $t1, 3, OP_3
+ 	
+ 	OP_1:
+ 		la $a0, divisor
+ 		j SEQ
+ 	OP_2:
+ 		la $a0, divisor_1
+ 		j SEQ
+ 	OP_3:
+ 		la $a0, divisor_2
+ 		j SEQ
+ 	
+ 	SEQ:
+ 		
 	li $v0, 4
 	syscall # imprime divisor
 	LOOP_ISEP:
@@ -178,28 +366,9 @@ procura_letra:
 	li $v0, 4
 	syscall # imprime \n
 	jr $ra
-	
-.globl imprime_final
- imprime_final:
- 	move $t0, $a0 # t0 - ponteiro
- 	la $a0, divisor_1
-	li $v0, 4
-	syscall # imprime divisor
-	LOOP_ISEP_1:
-		lb $t1, 0($t0)
-		beq $t1, $zero, END_LOOP_ISEP_1
-		move $a0, $t1
-		li $v0, 11
-		syscall # inprime caractere
-		add $t0, $t0, 1 # incrementa ponteiro
-		j LOOP_ISEP_1
-	END_LOOP_ISEP_1:
-	la $a0, newLine
-	li $v0, 4
-	syscall # imprime \n
-	jr $ra
 
 
+#FUNÇÕES PARA MANIPULAÇÃO DE STRINGS
 .globl strlen
 strlen:
 	move $t0, $a0 # t0 <- ponteiro para a string
