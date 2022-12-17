@@ -5,6 +5,7 @@
 	msg_3: .asciiz "\n" #mensagem exibida
 	msg_4: .asciiz "\nQue pena! Tente de novo!\n\nFinal de jogo.\n" #mensagem exibida
 	msg_5: .asciiz "\nParabéns, você acertou!\n\nFinal de jogo.\n" #mensagem exibida
+	msg_5: .asciiz "Aperte ENTER para dar início ao jogo\n" #mensagem exibida
 	
 	palavra_0: .asciiz "basquete"
 	palavra_1: .asciiz "casa"
@@ -35,12 +36,45 @@
 	palavra: .space 50
 	palavra_aux: .space 50
 	
+	tela_l1: .asciiz "    ##### ##### #####  #####    ####  #####    #### ##### ##### ##### #####\n"
+	tela_l2: .asciiz "      #   #   # #      #   #    #   # #   #    #    #   # #   # #     #   #\n"
+	tela_l3: .asciiz "      #   #   # #  ##  #   #    #   # #####    #### #   # ##### #     #####\n"
+	tela_l4: .asciiz "      #   #   # #   #  #   #    #   # #   #    #    #   # # ##  #     #   #\n"
+	tela_l5: .asciiz "    ###   ##### #####  #####    ####  #   #    #    ##### #  ## ##### #   #\n\n\n"
+	
 .text
+
+main:
 
 	#inicia o jogo
 	li $v0, 4
-	la $a0, msg_1
+	la $a0, tela_l1
 	syscall #so imprime a0
+	
+	li $v0, 4
+	la $a0, tela_l2
+	syscall #so imprime a0
+	
+	li $v0, 4
+	la $a0, tela_l3
+	syscall #so imprime a0
+	
+	li $v0, 4
+	la $a0, tela_l4
+	syscall #so imprime a0
+	
+	li $v0, 4
+	la $a0, tela_l5
+	syscall #so imprime a0
+	
+	#da inicio ao jogo no ENTER
+	
+	
+	li $v0, 12
+	syscall
+	move $a0, $v0
+	
+	
 	
 	#sorteia a numero de 0 a 19
 	li $a1, 20  
@@ -412,3 +446,7 @@ strcpy:
 		j LOOP_SC
 	END_LOOP_SC:
 	jr $ra
+
+	
+
+	
