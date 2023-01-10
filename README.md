@@ -18,6 +18,9 @@ Para que a parte de interface gráfica do jogo funcione corretamente, é necess�
 ## :joystick: Como jogar
 O jogo desenvolvido segue as mesmas regras do jogo de forca tradicional. O funcionamento do jogo é:
 
-O computador escolhe uma palavra aleatória, a qual é exibida na forma de "_" para o usuário. Cada tracinho corresponde a uma única letra. Então, o usuário deve adivinhar a palavra sorteada escolhendo uma letra do alfabeto de cada vez. No caso da letra escolhida estar na palavra sorteada, o(s) espaço(s) que ela ocupa são preenchidos com a letra em questão. Em caso da palavra sorteada não possuir a letra escolhida, o usuário perde uma chance e é desenhada uma parte de um bonequinho na forca. Assim, o objetivo do jogo é acertar a palavra sorteada antes que o bonequinho seja totalemnte desenho na forca, ou seja, enforcado.
+O computador escolhe uma palavra, a qual é exibida na forma de "_" para o usuário. Cada tracinho corresponde a uma única letra. Então, o usuário deve adivinhar a palavra sorteada escolhendo uma letra do alfabeto de cada vez. No caso da letra escolhida estar na palavra sorteada, o(s) espaço(s) que ela ocupa são preenchidos com a letra em questão. Em caso da palavra sorteada não possuir a letra escolhida, o usuário perde uma chance e é incrementado um erro. Assim, o objetivo do jogo é acertar a palavra sorteada antes que o número de erros passe do limite.
 
 Ao final do jogo, o usuário pode optar por jogar novamente com uma nova palavra.
+
+
+Link do vídeo de apresentação: https://drive.google.com/file/d/1WqJmGIGCq2qHJuR8Ue50g33sucusylDf/view?usp=share_link 
