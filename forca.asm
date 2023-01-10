@@ -1,6 +1,7 @@
 ;Grupo:
 ;	Carlos Nery Ribeiro
-;   Gabriel Ribeiro Dessotti
+;   Gabriel Ribeiro Rodrigues 
+Dessotti
 ;   Fernando Clarindo Cristóvão
 ;   Pedro Manicardi Soares
 
