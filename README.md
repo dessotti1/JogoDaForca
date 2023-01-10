@@ -5,7 +5,7 @@ Esse jogo é o projeto da disciplina SSC0902 - Organização e Arquitetura de Co
 Os autores do trabalho com os respectivos números USP:
 - Carlos Nery Ribeiro - 12547698
 - Fernando Clarindo Cristóvão - 12547573
-- Gabriel Ribeiro Dessotti - 12547228
+- Gabriel Ribeiro Rodrigues Dessotti - 12547228
 - Pedro Manicardi Soares - 12547621
 
 ## :keyboard: Desenvolvido com
