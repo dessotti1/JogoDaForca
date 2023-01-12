@@ -49,12 +49,12 @@ palavra_6: string "camelo" 	 ;palavra de 6 digitos
 palavra_7: string "estadio"	  ;palavra de 7 digitos
 palavra_8: string "vistoria"   ;palavra de 8 digitos
 palavra_9: string "televisao"   ;palavra de 9 digitos
-palavra_10: string "intrinseco"  ;palavra de 9 digitos
-palavra_11: string "faturamento"  ;palavra de 9 digitos
-palavra_12: string "prerrogativa"  ;palavra de 9 digitos
-palavra_13: string "reciprocidade"  ;palavra de 9 digitos
-palavra_14: string "epistemologico"  ;palavra de 9 digitos
-palavra_15: string "conscientizacao"  ;palavra de 9 digitos
+palavra_10: string "intrinseco"  ;palavra de 10 digitos
+palavra_11: string "faturamento"  ;palavra de 11 digitos
+palavra_12: string "prerrogativa"  ;palavra de 12 digitos
+palavra_13: string "reciprocidade"  ;palavra de 13 digitos
+palavra_14: string "epistemologico"  ;palavra de 14 digitos
+palavra_15: string "conscientizacao"  ;palavra de 15 digitos
 
 palavra: var #20 ;vetor para armazenar a palavra
 lista: var #20 ;vetor para armazenar a palavra
@@ -584,9 +584,9 @@ escolhe_letras:
 		
 	tamanho_10:
 		loadn r1, #10    ;tamanho da palavra
-		store palavra_tamanho, r1   ;o tamanho da palavra é 9
+		store palavra_tamanho, r1   ;o tamanho da palavra é 10
 		
-		;armazena a palavra "televisao"
+		;armazena a palavra "intrinseco"
 		loadn r3, #palavra
 		loadn r0, #'i'
 	 	add r4,r3,r2
@@ -633,9 +633,9 @@ escolhe_letras:
 			
 	tamanho_11:
 		loadn r1, #11    ;tamanho da palavra
-		store palavra_tamanho, r1   ;o tamanho da palavra é 9
+		store palavra_tamanho, r1   ;o tamanho da palavra é 11
 		
-		;armazena a palavra "televisao"
+		;armazena a palavra "faturamento"
 		loadn r3, #palavra
 		loadn r0, #'f'
 	 	add r4,r3,r2
@@ -686,9 +686,9 @@ escolhe_letras:
 	
 	tamanho_12:
 		loadn r1, #12    ;tamanho da palavra
-		store palavra_tamanho, r1   ;o tamanho da palavra é 9
+		store palavra_tamanho, r1   ;o tamanho da palavra é 12
 		
-		;armazena a palavra "televisao"
+		;armazena a palavra "prerrogativa"
 		loadn r3, #palavra
 		loadn r0, #'p'
 	 	add r4,r3,r2
@@ -743,9 +743,9 @@ escolhe_letras:
 			
 	tamanho_13:
 		loadn r1, #13    ;tamanho da palavra
-		store palavra_tamanho, r1   ;o tamanho da palavra é 9
+		store palavra_tamanho, r1   ;o tamanho da palavra é 13
 		
-		;armazena a palavra "televisao"
+		;armazena a palavra "reciprocidade"
 		loadn r3, #palavra
 		loadn r0, #'r'
 	 	add r4,r3,r2
@@ -804,9 +804,9 @@ escolhe_letras:
 		
 	tamanho_14:
 		loadn r1, #14    ;tamanho da palavra
-		store palavra_tamanho, r1   ;o tamanho da palavra é 9
+		store palavra_tamanho, r1   ;o tamanho da palavra é 14
 		
-		;armazena a palavra "televisao"
+		;armazena a palavra "epistomologico"
 		loadn r3, #palavra
 		loadn r0, #'e'
 	 	add r4,r3,r2
@@ -869,9 +869,9 @@ escolhe_letras:
 				
 	tamanho_15:
 		loadn r1, #15    ;tamanho da palavra
-		store palavra_tamanho, r1   ;o tamanho da palavra é 9
+		store palavra_tamanho, r1   ;o tamanho da palavra é 15
 		
-		;armazena a palavra "televisao"
+		;armazena a palavra "conscientizacao"
 		loadn r3, #palavra
 		loadn r0, #'c'
 	 	add r4,r3,r2
