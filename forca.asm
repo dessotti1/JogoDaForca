@@ -11,17 +11,18 @@ jmp main
 ; ***************************************************	
 
 msg_1: string "        JOGO DA FORCA    " ;mensagem exibida
-msg_2: string "Digite uma letra: " ;mensagem exibida
-msg_4: string "Que pena! Tente de novo!Final de jogo." ;mensagem exibida
-msg_5: string "Parabens, voce acertou! Final de jogo." ;mensagem exibida
+msg_2: string " Digite uma letra: " ;mensagem exibida
+msg_4: string " Que pena! Tente de novo! Final de jogo" ;mensagem exibida
+msg_5: string " Parabens, voce acertou! Final de jogo" ;mensagem exibida
 msg_6: string "                                           " ;mensagem exibida
-msg_7: string "Pressione N para jogar novamente! " ;mensagem exibida
-msg_8: string "Aperte ENTER para dar inicio ao jogo" ;mensagem exibida
-msg_9: string "Bem vindo ao jogo da Forca!" ;mensagem exibida
-msg_10: string "Erros: " ;mensagem exibida
-msg_11: string "Palavra correta: " ;mensagem exibida
-msg_12: string "Digite o numero de letras desejado (3 a 9)" ;mensagem exibida
-msg_13: string "Letra ja foi digitada!"
+msg_7: string " Pressione N para jogar novamente! " ;mensagem exibida
+msg_8: string " Aperte ENTER para dar inicio ao jogo" ;mensagem exibida
+msg_9: string " Bem-vindo ao Jogo da Forca!" ;mensagem exibida
+msg_10: string " Erros: " ;mensagem exibida
+msg_11: string " Palavra correta: " ;mensagem exibida
+msg_12: string " Digite o numero de letras desejado (3 a 15) em hexadecimal" ;mensagem exibida
+msg_13: string " Letra ja foi digitada!"
+msg_14: string " Letras digitadas: "
 
 
 letra_3: string "3" ;tamanho da palavra
@@ -31,20 +32,32 @@ letra_6: string "6" ;tamanho da palavra
 letra_7: string "7" ;tamanho da palavra
 letra_8: string "8" ;tamanho da palavra
 letra_9: string "9" ;tamanho da palavra
+letra_10: string "A" ;tamanho da palavra
+letra_11: string "B" ;tamanho da palavra
+letra_12: string "C" ;tamanho da palavra
+letra_13: string "D" ;tamanho da palavra
+letra_14: string "E" ;tamanho da palavra
+letra_15: string "F" ;tamanho da palavra
 	
 Letra: var #1
 
 
-palavra_3: string "pai" 	   ;palavra de 3 digitos
-palavra_4: string "bola"	   ;palavra de 4 digitos
-palavra_5: string "porta"	   ;palavra de 5 digitos
-palavra_6: string "camelo" 	   ;palavra de 6 digitos
-palavra_7: string "estadio"	   ;palavra de 7 digitos
+palavra_3: string "pai"   ;palavra de 3 digitos
+palavra_4: string "bola"   ;palavra de 4 digitos
+palavra_5: string "porta"   ;palavra de 5 digitos
+palavra_6: string "camelo" 	 ;palavra de 6 digitos
+palavra_7: string "estadio"	  ;palavra de 7 digitos
 palavra_8: string "vistoria"   ;palavra de 8 digitos
-palavra_9: string "televisao"  ;palavra de 9 digitos
-
+palavra_9: string "televisao"   ;palavra de 9 digitos
+palavra_10: string "intrinseco"  ;palavra de 9 digitos
+palavra_11: string "faturamento"  ;palavra de 9 digitos
+palavra_12: string "prerrogativa"  ;palavra de 9 digitos
+palavra_13: string "reciprocidade"  ;palavra de 9 digitos
+palavra_14: string "epistemologico"  ;palavra de 9 digitos
+palavra_15: string "conscientizacao"  ;palavra de 9 digitos
 
 palavra: var #20 ;vetor para armazenar a palavra
+lista: var #20 ;vetor para armazenar a palavra
 
 palavra_tamanho: var #1 ;armazena o tamanho da palavra
 repetida : var #50
@@ -142,6 +155,7 @@ escolhe_letras:
 	push r2		
 	push r3 	;armazena letra digitada
 	push r4		;armazena o numero de letras
+	push r5
 
 
 	loadn r0, #360
@@ -153,7 +167,10 @@ escolhe_letras:
 	tela_loop:
 		
 		call DigLetra
-		load r3, Letra 
+		loadn r5, #20
+		load r3, Letra
+		;mod r3, r3, r5
+		;load r3, Letra 
 		
 		load r4, letra_3
 		cmp r3, r4   ;compara a letra digitada e o caracter '3'
@@ -182,6 +199,30 @@ escolhe_letras:
 		load r4, letra_9
 		cmp r3, r4    ;compara a letra digitada e o caracter '9'
 		jeq tamanho_9  ;se a letra digitada for 9
+		
+		load r4, letra_10
+		cmp r3, r4    ;compara a letra digitada e o caracter 'A'
+		jeq tamanho_10  ;se a letra digitada for A
+		
+		load r4, letra_11
+		cmp r3, r4    ;compara a letra digitada e o caracter 'B'
+		jeq tamanho_11  ;se a letra digitada for B
+				
+		load r4, letra_12
+		cmp r3, r4    ;compara a letra digitada e o caracter 'C'
+		jeq tamanho_12  ;se a letra digitada for C
+		
+		load r4, letra_13
+		cmp r3, r4    ;compara a letra digitada e o caracter 'D'
+		jeq tamanho_13  ;se a letra digitada for D
+		
+		load r4, letra_14
+		cmp r3, r4    ;compara a letra digitada e o caracter 'E'
+		jeq tamanho_14  ;se a letra digitada for E
+		
+		load r4, letra_15
+		cmp r3, r4    ;compara a letra digitada e o caracter 'F'
+		jeq tamanho_15  ;se a letra digitada for F
 		
 		cmp r3, r4
 		jne tela_loop  ;caso contrario, volta pro loop
@@ -234,6 +275,7 @@ escolhe_letras:
 	 	
 		jmp escolhe_fim
 		jmp desenhaComeco
+		
 	tamanho_4:
 		loadn r1, #4   ;tamanho da palavra
 		store palavra_tamanho, r1 ;o tamanho da palavra é 4
@@ -539,7 +581,362 @@ escolhe_letras:
 	 	
 		jmp escolhe_fim
 		jmp desenhaComeco
+		
+	tamanho_10:
+		loadn r1, #10    ;tamanho da palavra
+		store palavra_tamanho, r1   ;o tamanho da palavra é 9
+		
+		;armazena a palavra "televisao"
+		loadn r3, #palavra
+		loadn r0, #'i'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'n'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'t'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'r'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'i'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'n'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'s'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'e'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'c'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'o'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	
+		jmp escolhe_fim
+		jmp desenhaComeco
+			
+	tamanho_11:
+		loadn r1, #11    ;tamanho da palavra
+		store palavra_tamanho, r1   ;o tamanho da palavra é 9
+		
+		;armazena a palavra "televisao"
+		loadn r3, #palavra
+		loadn r0, #'f'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'a'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'t'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'u'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'r'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'a'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'m'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'e'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'n'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'t'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'o'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	
+		jmp escolhe_fim
+		jmp desenhaComeco
+	
+	tamanho_12:
+		loadn r1, #12    ;tamanho da palavra
+		store palavra_tamanho, r1   ;o tamanho da palavra é 9
+		
+		;armazena a palavra "televisao"
+		loadn r3, #palavra
+		loadn r0, #'p'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'r'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'e'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'r'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'r'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'o'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'g'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'a'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'t'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'i'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'v'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'a'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	
+		jmp escolhe_fim
+		jmp desenhaComeco
+			
+	tamanho_13:
+		loadn r1, #13    ;tamanho da palavra
+		store palavra_tamanho, r1   ;o tamanho da palavra é 9
+		
+		;armazena a palavra "televisao"
+		loadn r3, #palavra
+		loadn r0, #'r'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'e'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'c'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'i'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'p'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'r'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'o'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'c'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'i'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'d'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'a'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'d'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'e'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	
+		jmp escolhe_fim
+		jmp desenhaComeco
+		
+	tamanho_14:
+		loadn r1, #14    ;tamanho da palavra
+		store palavra_tamanho, r1   ;o tamanho da palavra é 9
+		
+		;armazena a palavra "televisao"
+		loadn r3, #palavra
+		loadn r0, #'e'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'p'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'i'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'s'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'t'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'e'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'m'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'o'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'l'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'o'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'g'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'i'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'c'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'o'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	
+		jmp escolhe_fim
+		jmp desenhaComeco	
+				
+	tamanho_15:
+		loadn r1, #15    ;tamanho da palavra
+		store palavra_tamanho, r1   ;o tamanho da palavra é 9
+		
+		;armazena a palavra "televisao"
+		loadn r3, #palavra
+		loadn r0, #'c'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'o'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'n'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'s'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'c'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'i'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'e'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'n'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'t'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'i'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'z'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'a'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'c'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'a'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	inc r2
+	 	loadn r0, #'o'
+	 	add r4,r3,r2
+	 	storei r4, r0
+	 	
+		jmp escolhe_fim
+		jmp desenhaComeco			
 	escolhe_fim:
+		pop r5
 		pop r4 
 		pop r3
 		pop r2 
